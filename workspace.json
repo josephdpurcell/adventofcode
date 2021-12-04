@@ -1,4 +1,6 @@
 {
   "version": 2,
-  "projects": {}
+  "projects": {
+    "2021-12-03": "apps/2021-12-03"
+  }
 }
