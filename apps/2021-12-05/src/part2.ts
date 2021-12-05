@@ -82,31 +82,52 @@ function plot(graph: Record<number, Record<number, number>>, line: Line): void {
     }
   } else {
     // We have a 45 degree line.
-    // We need to plot the start point, end point, and all points in between...
-    // which will be tricky because X and Y are not constant.
-    // Choose an X.
-    let startX = 0;
-    let endX = 0;
-    if (line.a.x > line.b.x) {
-      startX = line.b.x;
-      endX = line.a.x;
+
+    if (line.a.x - line.b.x === line.a.y - line.b.y) {
+      const mix = Math.min(line.a.x, line.b.x);
+      const max = Math.max(line.a.x, line.b.x);
+      let y = Math.min(line.a.y, line.b.y);
+      for (let x = mix; x <= max; x++) {
+        plotPoint(graph, x, y);
+        y = y + 1;
+      }
+    } else if (line.a.x - line.b.x === line.b.y - line.a.y) {
+      const mix = Math.min(line.a.x, line.b.x);
+      const max = Math.max(line.a.x, line.b.x);
+      let y = Math.max(line.a.y, line.b.y);
+      for (let x = mix; x <= max; x++) {
+        plotPoint(graph, x, y);
+        y = y - 1;
+      }
     } else {
-      startX = line.a.x;
-      endX = line.b.x;
+      throw new Error('Logic error!');
     }
-    // Choose a Y. We won't have an endY; we'll assume 45 degree angle results
-    // in the final y iteration equalling endY.
-    let startY = 0;
-    if (line.a.y > line.b.y) {
-      startY = line.b.y;
-    } else {
-      startY = line.a.y;
-    }
-    let y = startY;
-    for (let x = startX; x <= endX; x++) {
-      plotPoint(graph, x, y);
-      y = y + 1;
-    }
+
+    // // We need to plot the start point, end point, and all points in between...
+    // // which will be tricky because X and Y are not constant.
+    // // Choose an X.
+    // let startX = 0;
+    // let endX = 0;
+    // if (line.a.x > line.b.x) {
+    //   startX = line.b.x;
+    //   endX = line.a.x;
+    // } else {
+    //   startX = line.a.x;
+    //   endX = line.b.x;
+    // }
+    // // Choose a Y. We won't have an endY; we'll assume 45 degree angle results
+    // // in the final y iteration equalling endY.
+    // let startY = 0;
+    // if (line.a.y > line.b.y) {
+    //   startY = line.b.y;
+    // } else {
+    //   startY = line.a.y;
+    // }
+    // let y = startY;
+    // for (let x = startX; x <= endX; x++) {
+    //   plotPoint(graph, x, y);
+    //   y = y + 1;
+    // }
   }
 }
 
@@ -137,16 +158,16 @@ export function part2(): void {
     }
 
     let count = 0;
-    for (const x in graph) {
-      for (const y in graph[x]) {
-        if (graph[x][y] > 1) {
+    for (let x = 1; x <= 1000; x++) {
+      for (let y = 1; y <= 1000; y++) {
+        if (graph[x] !== undefined && graph[x][y] !== undefined && graph[x][y] > 1) {
           // console.log(`we have one! ${x},${y} = ${graph[x][y]}`);
           count++;
         }
       }
     }
 
-    printGraph(graph, 1000, 1000);
+    // printGraph(graph, 1000, 1000);
 
     console.log(`Points with 2 or more lines crossing: ${count}`);
   });
