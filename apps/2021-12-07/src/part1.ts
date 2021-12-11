@@ -1,9 +1,6 @@
 import * as fs from 'fs';
 import * as os from 'os';
 
-// crab subs only move horizontally
-// 1 move = 1 fuel
-
 export function getInputFile(): string {
   const homedir = os.homedir();
   const inputFile = homedir + '/src/github.com/josephdpurcell/adventofcode/apps/2021-12-07/src/input.txt';
@@ -32,10 +29,11 @@ export function get(): Record<number, number> {
   return numbers;
 }
 
-export function main(): void {
-  const crabs = get();
-  console.debug(crabs);
+function fuelCalc(targetPos: number, currentPos: number, count: number): number {
+  return Math.abs(targetPos - currentPos) * count;
+}
 
+export function getMoves(crabs: Record<number, number>, fn?: CallableFunction): Record<number, number> {
   let max = undefined;
   let min = undefined;
   for (const i in crabs) {
@@ -55,11 +53,20 @@ export function main(): void {
     for (const i in crabs) {
       const pos = Number(i);
       const count = crabs[i];
-      const thisFuel = Math.abs(targetPos - pos) * count;
+      // const thisFuel = Math.abs(targetPos - pos) * count;
+      const thisFuel = fn(targetPos, pos, count);
       // console.log(`    Move ${count} crabs from ${pos} to ${targetPos} = ${thisFuel}`);
       moves[targetPos] = moves[targetPos] + thisFuel;
     }
   }
+  return moves;
+}
+
+export function main(): void {
+  const crabs = get();
+  console.debug(crabs);
+  
+  const moves = getMoves(crabs, fuelCalc);
 
   let alignFuel = undefined;
   let alignPos = undefined;
