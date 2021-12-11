@@ -31,7 +31,7 @@ const digitCounts = {
 
 export function getInputFile(): string {
   const homedir = os.homedir();
-  const inputFile = homedir + '/src/github.com/josephdpurcell/adventofcode/apps/2021-12-08/src/input.txt';
+  const inputFile = homedir + '/src/github.com/josephdpurcell/adventofcode/apps/2021-12-08/src/input-test.txt';
   return inputFile;
 }
 
