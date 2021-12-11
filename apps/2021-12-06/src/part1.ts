@@ -1,13 +1,13 @@
 import * as fs from 'fs';
 import * as os from 'os';
 
-function getInputFile(): string {
+export function getInputFile(): string {
   const homedir = os.homedir();
-  const inputFile = homedir + '/src/github.com/josephdpurcell/adventofcode/apps/2021-12-06/src/input-truncated.txt';
+  const inputFile = homedir + '/src/github.com/josephdpurcell/adventofcode/apps/2021-12-06/src/input.txt';
   return inputFile;
 }
 
-class LanternfishPopulation {
+export class LanternfishPopulation {
   protected day = 0;
   protected fish: number[] = [];
 
