@@ -1,11 +1,11 @@
-import { get, getMoves } from './part1';
+import { get, getMoves, FuelFunction } from './part1';
 
-function fuelCalc(targetPos: number, currentPos: number, count: number): number {
+const fuelCalc: FuelFunction = (targetPos: number, currentPos: number, count: number): number => {
   const dist = Math.abs(targetPos - currentPos);
   // Nth Triangle Number = 1 + 2 + 3... + N = (N^2 + N) / 2
   const nthTriangleNumber = (dist ** 2 + dist) / 2;
   return nthTriangleNumber * count;
-}
+};
 
 export function main(): void {
   const crabs = get();

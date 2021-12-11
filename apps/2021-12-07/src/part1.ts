@@ -33,7 +33,9 @@ function fuelCalc(targetPos: number, currentPos: number, count: number): number 
   return Math.abs(targetPos - currentPos) * count;
 }
 
-export function getMoves(crabs: Record<number, number>, fn?: CallableFunction): Record<number, number> {
+export type FuelFunction = (targetPos: number, currentPos: number, count: number) => number;
+
+export function getMoves(crabs: Record<number, number>, fn?: FuelFunction): Record<number, number> {
   let max = undefined;
   let min = undefined;
   for (const i in crabs) {
@@ -65,7 +67,7 @@ export function getMoves(crabs: Record<number, number>, fn?: CallableFunction): 
 export function main(): void {
   const crabs = get();
   console.debug(crabs);
-  
+
   const moves = getMoves(crabs, fuelCalc);
 
   let alignFuel = undefined;
